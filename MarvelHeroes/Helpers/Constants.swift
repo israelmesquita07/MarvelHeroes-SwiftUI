@@ -14,14 +14,17 @@ enum Endpoint {
     static func offset(_ offset: Int, with limit: Int) -> String {
         "offset=\(offset)&limit=\(limit)&"
     }
-    static func getUrl(_ name:String, _ page:Int) -> String {
+    static func nameStartsWith(_ name:String) -> String {
+        guard !name.isEmpty else {
+            return String()
+        }
+        return "nameStartsWith=\(name.replacingOccurrences(of: " ", with: ""))&"
+    }
+    func getUrl(_ name:String, _ page:Int) -> String {
         let limit = 50
         let offset = page * limit
-        var startsWith: String = ""
-        if !name.isEmpty {
-            startsWith = "nameStartsWith=\(name.replacingOccurrences(of: " ", with: ""))&"
-        }
-        return "\(basepath)\(Endpoint.offset(offset, with: limit))\(startsWith)\(Credentials.getCredentials())"
+        var startsWith: String = Endpoint.nameStartsWith(name)
+        return "\(Endpoint.basepath)\(Endpoint.offset(offset, with: limit))\(startsWith)\(Credentials.getCredentials())"
     }
 }
 
