@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var heroes: [Hero] = []
+    @ObservedObject private var viewModel = HeroViewModel()
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(heroes, id: \.id) { hero in
+                ForEach(viewModel.heroes, id: \.id) { hero in
                     HeroRow(hero: hero)
                         .listRowBackground(Color.black)
+                        .onAppear {
+                            guard let lastHero = viewModel.heroes.last else {
+                                return
+                            }
+                            if hero.id == lastHero.id && !viewModel.isLoading {
+                                viewModel.nextPage()
+                            }
+                        }
+                }
+                if viewModel.isLoading {
+                    ProgressView()
                 }
             }
             .background(.black)
@@ -23,12 +34,7 @@ struct ContentView: View {
             .navigationTitle("Marvel Heroes")
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
-                NetworkAPI().fetchData(name: "", page: 1) { (result: Result<MarvelInfo, NetworkingError>) in
-                    print(result)
-                    if case let .success(success) = result {
-                        heroes = success.data.results
-                    }
-                }
+                viewModel.nextPage()
             }
         }
         .modifier(NavigationBarColor(backgroundColor: .black, tintColor: .white))
