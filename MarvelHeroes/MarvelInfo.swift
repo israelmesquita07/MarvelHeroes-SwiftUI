@@ -19,7 +19,7 @@ struct MarvelData: Codable {
     let results: [Hero]
 }
 
-final class Hero: Codable {
+final class Hero: Codable, Hashable {
     let id: Int
     let name: String
     let description: String
@@ -32,12 +32,20 @@ final class Hero: Codable {
             self._isFavorite = newValue
         }
     }
-    
+
     init(id: Int, name: String, description: String, thumbnail: Thumbnail) {
         self.id = id
         self.name = name
         self.description = description
         self.thumbnail = thumbnail
+    }
+
+    static func == (lhs: Hero, rhs: Hero) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55500A142C12B35300944F64 /* DetailsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55500A132C12B35300944F64 /* DetailsContentView.swift */; };
 		5570568E2C0023B6001D1E37 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5570568D2C0023B6001D1E37 /* Constants.swift */; };
 		557056932C002ABC001D1E37 /* HeroRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557056922C002ABC001D1E37 /* HeroRow.swift */; };
 		557056952C003F4C001D1E37 /* NavigationBarColorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557056942C003F4C001D1E37 /* NavigationBarColorViewModifier.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		55500A132C12B35300944F64 /* DetailsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContentView.swift; sourceTree = "<group>"; };
 		5570568D2C0023B6001D1E37 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		557056922C002ABC001D1E37 /* HeroRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroRow.swift; sourceTree = "<group>"; };
 		557056942C003F4C001D1E37 /* NavigationBarColorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColorViewModifier.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				5570568F2C0027F9001D1E37 /* Helpers */,
 				5587C9C52BFED01E00920753 /* Assets.xcassets */,
 				5587C9C72BFED01E00920753 /* Preview Content */,
+				55500A132C12B35300944F64 /* DetailsContentView.swift */,
 			);
 			path = MarvelHeroes;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				5587C9EE2BFED24500920753 /* String+Extension.swift in Sources */,
 				5587C9F02BFED69200920753 /* MarvelInfo.swift in Sources */,
 				5587C9EC2BFED0A600920753 /* NetworkAPI.swift in Sources */,
+				55500A142C12B35300944F64 /* DetailsContentView.swift in Sources */,
 				5587C9C42BFED01B00920753 /* ContentView.swift in Sources */,
 				5577C2F92C1003CF00AD7F71 /* HeroViewModel.swift in Sources */,
 				557056952C003F4C001D1E37 /* NavigationBarColorViewModifier.swift in Sources */,

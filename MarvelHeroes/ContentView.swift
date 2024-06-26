@@ -14,31 +14,43 @@ struct ContentView: View {
         NavigationStack {
             List {
                 ForEach(viewModel.heroes, id: \.id) { hero in
-                    HeroRow(hero: hero)
-                        .listRowBackground(Color.black)
-                        .onAppear {
-                            guard let lastHero = viewModel.heroes.last else {
-                                return
+                    NavigationLink(destination: DetailsContentView(hero: hero)) {
+                        HeroRow(hero: hero)
+                            .onAppear {
+                                guard let lastHero = viewModel.heroes.last else {
+                                    return
+                                }
+                                if hero == lastHero && !viewModel.isLoading {
+                                    viewModel.nextPage()
+                                }
                             }
-                            if hero.id == lastHero.id && !viewModel.isLoading {
-                                viewModel.nextPage()
-                            }
-                        }
+                    }
+                    .listRowBackground(Color.black)
                 }
                 if viewModel.isLoading {
-                    ProgressView()
+                    ZStack {
+                        Color.black
+                        
+                        ProgressView()
+                            .padding()
+                            .tint(Color.red)
+                            .progressViewStyle(.circular)
+                            .scaleEffect(2.0)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .listRowBackground(Color.black)
                 }
             }
-            .background(.black)
+            .background(Color.black)
             .scrollContentBackground(.hidden)
             .navigationTitle("Marvel Heroes")
+            .foregroundStyle(.white)
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
                 viewModel.nextPage()
             }
         }
         .modifier(NavigationBarColor(backgroundColor: .black, tintColor: .white))
-
     }
 }
 

@@ -19,6 +19,13 @@ protocol Networking {
 }
 
 final class NetworkAPI: Networking {
+    
+    private var sharedUrlSession: URLSession
+    
+    init(sharedUrlSession: URLSession = URLSession.shared) {
+        self.sharedUrlSession = sharedUrlSession
+    }
+    
     func fetchData<T:Codable>(name: String, page: Int, completion: @escaping(Result<T, NetworkingError>) -> Void) {
         guard let url = URL(string: Endpoint.heroes.getUrl(name, page)) else {
             DispatchQueue.main.async {
@@ -26,7 +33,7 @@ final class NetworkAPI: Networking {
             }
             return
         }
-        let dataTask = URLSession.shared.dataTask(with: url) { data, _, error in
+        let dataTask = sharedUrlSession.dataTask(with: url) { data, _, error in
             guard error == nil else {
                 DispatchQueue.main.async {
                     completion(.failure(.conectionError))
