@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject private var viewModel = HeroViewModel()
+    @State private var searchText = ""
     
     var body: some View {
         NavigationStack {
@@ -51,6 +52,8 @@ struct ContentView: View {
             }
         }
         .modifier(NavigationBarColor(backgroundColor: .black, tintColor: .white))
+        .searchable(text: $searchText, isPresented: .constant(true), prompt: "Find your hero")
+        .modifier(TextFieldSearchBarColor(backgroundColor: .white, tintColor: .black))
     }
 }
 

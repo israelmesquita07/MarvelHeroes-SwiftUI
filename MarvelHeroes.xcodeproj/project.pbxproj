@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5543977A2C2D0B12009C94C5 /* TextFieldSearchBarColorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554397792C2D0B12009C94C5 /* TextFieldSearchBarColorModifier.swift */; };
 		55500A142C12B35300944F64 /* DetailsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55500A132C12B35300944F64 /* DetailsContentView.swift */; };
 		5570568E2C0023B6001D1E37 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5570568D2C0023B6001D1E37 /* Constants.swift */; };
 		557056932C002ABC001D1E37 /* HeroRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557056922C002ABC001D1E37 /* HeroRow.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		554397792C2D0B12009C94C5 /* TextFieldSearchBarColorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldSearchBarColorModifier.swift; sourceTree = "<group>"; };
 		55500A132C12B35300944F64 /* DetailsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContentView.swift; sourceTree = "<group>"; };
 		5570568D2C0023B6001D1E37 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		557056922C002ABC001D1E37 /* HeroRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroRow.swift; sourceTree = "<group>"; };
@@ -88,12 +90,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5543977B2C2D0B17009C94C5 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				557056942C003F4C001D1E37 /* NavigationBarColorViewModifier.swift */,
+				554397792C2D0B12009C94C5 /* TextFieldSearchBarColorModifier.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 		5570568F2C0027F9001D1E37 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				5587C9ED2BFED24500920753 /* String+Extension.swift */,
 				5570568D2C0023B6001D1E37 /* Constants.swift */,
-				557056942C003F4C001D1E37 /* NavigationBarColorViewModifier.swift */,
+				5543977B2C2D0B17009C94C5 /* Modifiers */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -293,6 +304,7 @@
 			files = (
 				5587C9EE2BFED24500920753 /* String+Extension.swift in Sources */,
 				5587C9F02BFED69200920753 /* MarvelInfo.swift in Sources */,
+				5543977A2C2D0B12009C94C5 /* TextFieldSearchBarColorModifier.swift in Sources */,
 				5587C9EC2BFED0A600920753 /* NetworkAPI.swift in Sources */,
 				55500A142C12B35300944F64 /* DetailsContentView.swift in Sources */,
 				5587C9C42BFED01B00920753 /* ContentView.swift in Sources */,
