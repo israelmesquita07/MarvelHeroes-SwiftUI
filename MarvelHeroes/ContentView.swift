@@ -22,7 +22,7 @@ struct ContentView: View {
                                     return
                                 }
                                 if hero == lastHero && !viewModel.isLoading {
-                                    viewModel.nextPage()
+                                    viewModel.nextPage(name: searchText)
                                 }
                             }
                     }
@@ -48,11 +48,14 @@ struct ContentView: View {
             .foregroundStyle(.white)
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
-                viewModel.nextPage()
+                viewModel.nextPage(name: searchText)
+            }
+            .onChange(of: searchText) { _, newValue in
+                viewModel.searchHeroes(name: newValue)
             }
         }
         .modifier(NavigationBarColor(backgroundColor: .black, tintColor: .white))
-        .searchable(text: $searchText, isPresented: .constant(true), prompt: "Find your hero")
+        .searchable(text: $searchText, prompt: "Find your hero")
         .modifier(TextFieldSearchBarColor(backgroundColor: .white, tintColor: .black))
     }
 }

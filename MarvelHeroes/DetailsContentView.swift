@@ -26,12 +26,16 @@ struct DetailsContentView: View {
                     .aspectRatio(contentMode: .fit)
                     .border(Color.black, width: 5.0)
             } placeholder: {
-                ProgressView()
-                    .padding()
-                    .tint(Color.red)
-                    .progressViewStyle(.circular)
-                    .scaleEffect(2.0)
-                    .background(Color.black)
+                HStack {
+                    Spacer()
+                    ProgressView()
+                        .padding()
+                        .tint(Color.red)
+                        .progressViewStyle(.circular)
+                        .scaleEffect(2.0)
+                    Spacer()
+                }
+                .background(Color.black)
             }
             
             Text(description)
@@ -40,6 +44,7 @@ struct DetailsContentView: View {
                 .padding()
             Spacer()
         }
+        .background(Color.black)
         .navigationTitle(hero.name)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -52,7 +57,6 @@ struct DetailsContentView: View {
                 .tint(Color.white)
             }
         }
-        .background(Color.black)
     }
 }
 

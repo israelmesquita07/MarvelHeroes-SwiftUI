@@ -11,19 +11,22 @@ final class HeroViewModel: ObservableObject {
     @Published var heroes = [Hero]()
     @Published var isLoading = false
     private var totalHeroes = 1
-    private var name = ""
     private var page = 0
     
-    func nextPage() {
+    func nextPage(name: String) {
         guard !isLoading else { return }
         if heroes.count == totalHeroes {
             return
         }
-        getHero(name: name, page: page)
-        page += 1
+        getHero(name: name)
     }
     
-    private func getHero(name: String, page: Int = 1) {
+    func searchHeroes(name: String) {
+        resetVariables()
+        getHero(name: name)
+    }
+    
+    private func getHero(name: String) {
         isLoading = true
         NetworkAPI().fetchData(name: name, page: page) { [weak self] (result: Result<MarvelInfo, NetworkingError>) in
             print(result)
@@ -32,10 +35,17 @@ final class HeroViewModel: ObservableObject {
             case .success(let success):
                 totalHeroes = success.data.total
                 heroes += success.data.results
+                page += 1
             case .failure(let failure):
                 print("failure: \(failure.localizedDescription)")
             }
             isLoading = false
         }
+    }
+    
+    private func resetVariables() {
+        totalHeroes = 1
+        page = 0
+        heroes = []
     }
 }
