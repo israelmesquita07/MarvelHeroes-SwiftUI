@@ -18,28 +18,36 @@ final class HeroViewModel: ObservableObject {
         if heroes.count == totalHeroes {
             return
         }
-        getHero(name: name)
+        Task {
+            await getHero(name: name)
+        }
     }
     
     func searchHeroes(name: String) {
         resetVariables()
-        getHero(name: name)
+        Task {
+            await getHero(name: name)
+        }
     }
     
-    private func getHero(name: String) {
-        isLoading = true
-        NetworkAPI().fetchData(name: name, page: page) { [weak self] (result: Result<MarvelInfo, NetworkingError>) in
-            print(result)
-            guard let self else { return }
-            switch result {
-            case .success(let success):
-                totalHeroes = success.data.total
-                heroes += success.data.results
-                page += 1
-            case .failure(let failure):
-                print("failure: \(failure.localizedDescription)")
+    private func getHero(name: String) async {
+        await MainActor.run { [weak self] in
+            self?.isLoading = true
+        }
+
+        do {
+            let success: MarvelInfo = try await NetworkAPI().fetchData(name: name, page: page)
+            await MainActor.run { [weak self] in
+                self?.totalHeroes = success.data.total
+                self?.heroes += success.data.results
+                self?.page += 1
             }
-            isLoading = false
+        } catch {
+            print("failure: \(error.localizedDescription)")
+        }
+
+        await MainActor.run { [weak self] in
+            self?.isLoading = false
         }
     }
     

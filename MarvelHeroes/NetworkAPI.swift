@@ -9,13 +9,14 @@ import Foundation
 
 enum NetworkingError: Error {
     case invalidUrl
+    case invalidResponse
     case conectionError
     case dataError
     case parseError
 }
 
 protocol Networking {
-    func fetchData<T:Codable>(name: String, page: Int, completion: @escaping(Result<T, NetworkingError>) -> Void)
+    func fetchData<T:Codable>(name: String, page: Int) async throws -> T
 }
 
 final class NetworkAPI: Networking {
@@ -26,41 +27,25 @@ final class NetworkAPI: Networking {
         self.sharedUrlSession = sharedUrlSession
     }
     
-    func fetchData<T:Codable>(name: String, page: Int, completion: @escaping(Result<T, NetworkingError>) -> Void) {
+    func fetchData<T:Codable>(name: String, page: Int) async throws -> T {
         guard let url = URL(string: Endpoint.heroes.getUrl(name, page)) else {
-            DispatchQueue.main.async {
-                completion(.failure(.invalidUrl))
-            }
-            return
+            throw NetworkingError.invalidUrl
         }
-        let dataTask = sharedUrlSession.dataTask(with: url) { data, _, error in
-            guard error == nil else {
-                DispatchQueue.main.async {
-                    completion(.failure(.conectionError))
-                }
-                return
-            }
-            
-            guard let data else {
-                DispatchQueue.main.async {
-                    completion(.failure(.dataError))
-                }
-                return
-            }
-            
-            let decode = JSONDecoder()
-            decode.keyDecodingStrategy = .convertFromSnakeCase
-            decode.dateDecodingStrategy = .iso8601
-            guard let decoded = try? decode.decode(T.self, from: data) else {
-                DispatchQueue.main.async {
-                    completion(.failure(.parseError))
-                }
-                return
-            }
-            DispatchQueue.main.async {
-                completion(.success(decoded))
-            }
+        
+        let (data, response) = try await sharedUrlSession.data(for: URLRequest(url: url))
+        
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            throw NetworkingError.invalidResponse
         }
-        dataTask.resume()
+        
+        let decorder = JSONDecoder()
+        decorder.keyDecodingStrategy = .convertFromSnakeCase
+        decorder.dateDecodingStrategy = .iso8601
+        
+        guard let decoded = try? decorder.decode(T.self, from: data) else {
+            throw NetworkingError.parseError
+        }
+        
+        return decoded
     }
 }
